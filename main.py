@@ -48,13 +48,15 @@ def main():
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
         for pattern in patterns:
-            Path(f"./output/{bg}_{pattern}/").mkdir(exist_ok=True)
-            images = ctm_compact_gen(f"{bg_dir}/{bg}", f"{ore_dir}/{pattern}")
-            images[0].save(f"./output/{bg}_{pattern}/0.png")
-            images[1].save(f"./output/{bg}_{pattern}/1.png")
-            images[2].save(f"./output/{bg}_{pattern}/2.png")
-            images[3].save(f"./output/{bg}_{pattern}/3.png")
-            images[4].save(f"./output/{bg}_{pattern}/4.png")
+            images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            if bg == "stone":
+                Path(f"./output/{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"./output/{pattern}/{i}.png")
+            else:
+                Path(f"./output/{bg}_{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"./output/{bg}_{pattern}/{i}.png")
 
 
 if __name__ == "__main__":
