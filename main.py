@@ -1,3 +1,5 @@
+from PIL import Image, ImageDraw
+import os
 def main():
     print("Hello from ore-gen!")
 
