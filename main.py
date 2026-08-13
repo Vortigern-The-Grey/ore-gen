@@ -41,16 +41,20 @@ def texture_gen(base: str, overlay: str) -> Image.Image:
     return bg
 
 
-
 def main():
     bg_dir = Path("./sprites/stones/")
-    bgs = [f.name for f in bg_dir.iterdir() if f.is_file()]
+    bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("./sprites/ores/")
-    patterns = [f.name for f in ore_dir.iterdir() if f.is_file()]
+    patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
         for pattern in patterns:
-            img_0, img_1, img_2, img_3, img_4 = ctm_texture_gen(bg, pattern)
-    pass
+            Path(f"./output/{bg}_{pattern}/").mkdir(exist_ok=True)
+            images = ctm_compact_gen(f"{bg_dir}/{bg}", f"{ore_dir}/{pattern}")
+            images[0].save(f"./output/{bg}_{pattern}/0.png")
+            images[1].save(f"./output/{bg}_{pattern}/1.png")
+            images[2].save(f"./output/{bg}_{pattern}/2.png")
+            images[3].save(f"./output/{bg}_{pattern}/3.png")
+            images[4].save(f"./output/{bg}_{pattern}/4.png")
 
 
 if __name__ == "__main__":
