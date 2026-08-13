@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw
-import os
+import json
 
 
 def ctm_meta_gen(name: str):
@@ -13,21 +13,17 @@ def ctm_meta_gen(name: str):
     method=ctm_compact
     tiles=0-4
     """
-    mcmeta_template = f"""
-    {"ctm":{"ctm_version": 1,
-            "type":"ctm",
-            "layer":"SOLID",
-            "textures":[
-                "minecraft:block/{name}_ctm"
-            ],
-            "extra":{"ignore_states":false,
-        	    "connect_inside":true
-            }
+    mcmeta_template = {
+        "ctm": {
+            "ctm_version": 1,
+            "type": "ctm",
+            "layer": "SOLID",
+            "textures": [f"minecraft:block/{name}_ctm"],
+            "extra": {"ignore_states": False, "connect_inside": True},
         }
     }
-    """
 
-    return properties_template, mcmeta_template
+    return properties_template, json.dumps(mcmeta_template, indent=4)
 
 
 def texture_gen(base: str, overlay: str):
@@ -86,6 +82,13 @@ def ctm_texture_gen(base: str, overlay: str):
 
 
 def main():
+    bg_dir = Path("./sprites/stones/")
+    bgs = [f.name for f in dir_path.iterdir() if f.is_file()]
+    ore_path = Path("./sprites/ores/")
+    patterns = [f.name for f in dir_path.iterdir() if f.is_file()]
+    for bg in bgs:
+        for pattern in patterns:
+            img_0, img_1, img_2, img_3, img_4 = ctm_texture_gen(bg, pattern)
     pass
 
 
