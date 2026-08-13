@@ -84,8 +84,9 @@ def ctm_texture_gen(base: str, overlay: str):
     # return image objects
     return ctm_0, ctm_1, ctm_2, ctm_3, ctm_4
 
+
 def main():
-    print("Hello from ore-gen!")
+    pass
 
 
 if __name__ == "__main__":
