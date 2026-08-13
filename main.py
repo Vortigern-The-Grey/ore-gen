@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw
+from pathlib import Path
 import json
 
 
@@ -83,14 +84,15 @@ def ctm_texture_gen(base: str, overlay: str):
 
 def main():
     bg_dir = Path("./sprites/stones/")
-    bgs = [f.name for f in dir_path.iterdir() if f.is_file()]
-    ore_path = Path("./sprites/ores/")
-    patterns = [f.name for f in dir_path.iterdir() if f.is_file()]
+    bgs = [f.name for f in bg_dir.iterdir() if f.is_file()]
+    ore_dir = Path("./sprites/ores/")
+    patterns = [f.name for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
         for pattern in patterns:
             img_0, img_1, img_2, img_3, img_4 = ctm_texture_gen(bg, pattern)
     pass
 
+ e
 
 if __name__ == "__main__":
     main()
