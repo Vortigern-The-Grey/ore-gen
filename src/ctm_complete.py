@@ -1,4 +1,4 @@
-# from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageOps
 # from pathlib import Path
 # import json
 
