@@ -1,7 +1,7 @@
 from PIL import Image
 from pathlib import Path
 import json
-from ctm_compact import ctm_compact_gen
+from src.ctm_compact import ctm_compact_gen
 
 
 def ctm_meta_gen(name: str) -> list[str]:
