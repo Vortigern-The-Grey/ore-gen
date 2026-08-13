@@ -25,7 +25,7 @@ def ctm_meta_gen(name: str) -> list[str]:
         }
     }
 
-    return properties_template, json.dumps(mcmeta_template, indent=4)
+    return [properties_template, json.dumps(mcmeta_template, indent=4)]
 
 
 def texture_gen(base: str, overlay: str) -> Image.Image:
