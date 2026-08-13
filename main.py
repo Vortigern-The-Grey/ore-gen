@@ -4,7 +4,7 @@ import json
 from ctm_compact import ctm_compact_gen
 
 
-def ctm_meta_gen(name: str):
+def ctm_meta_gen(name: str) -> list[str]:
     """
     Returns .mcmeta and .properties strings for block name {name}
     """
@@ -28,7 +28,7 @@ def ctm_meta_gen(name: str):
     return properties_template, json.dumps(mcmeta_template, indent=4)
 
 
-def texture_gen(base: str, overlay: str):
+def texture_gen(base: str, overlay: str) -> Image.Image:
     """
     Loads two images and pastes one ontop of the other, returning the result.
     """
@@ -52,7 +52,6 @@ def main():
             img_0, img_1, img_2, img_3, img_4 = ctm_texture_gen(bg, pattern)
     pass
 
- e
 
 if __name__ == "__main__":
     main()
