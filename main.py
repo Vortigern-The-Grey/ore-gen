@@ -1,6 +1,7 @@
-from PIL import Image, ImageDraw
+from PIL import Image
 from pathlib import Path
 import json
+from ctm_compact import ctm_compact_gen
 
 
 def ctm_meta_gen(name: str):
@@ -39,47 +40,6 @@ def texture_gen(base: str, overlay: str):
     bg.alpha_composite(pattern)
     return bg
 
-
-def ctm_texture_gen(base: str, overlay: str):
-    """
-    Generates ctm tiles for ctm_compact (compact 8-way optifine spec) from 16x base and pattern images
-    """
-    # open images
-    bg = Image.open(base)
-    pattern = Image.open(overlay)
-
-    # generate 0.png (all sides)
-    ctm_0 = bg.alpha_composite(pattern)
-
-    # generate 1.png (no sides/borders)
-    pattern_1 = pattern.crop((1, 1, 15, 15))
-    ctm_1 = bg.alpha_composite(pattern_1, (1, 1))
-
-    # generate 2.png (vertical borders only)
-    pattern_2 = pattern.copy()
-    pattern_2_draw = ImageDraw.Draw(pattern_2)
-    pattern_2_draw.rectangle((1, 0, 14, 0), fill=(0, 0, 0, 0))
-    pattern_2_draw.rectangle((1, 15, 14, 15), fill=(0, 0, 0, 0))
-    ctm_2 = bg.alpha_composite(pattern_2)
-
-    # generate 3.png (horizontal borders only)
-    pattern_3 = pattern.copy()
-    pattern_3_draw = ImageDraw.Draw(pattern_3)
-    pattern_3_draw.rectangle((0, 1, 0, 14), fill=(0, 0, 0, 0))
-    pattern_3_draw.rectangle((15, 1, 15, 14), fill=(0, 0, 0, 0))
-    ctm_3 = bg.alpha_composite(pattern_3)
-
-    # generate 4.png (corners only)
-    pattern_4 = pattern.copy()
-    pattern_4_draw = ImageDraw.Draw(pattern_4)
-    pattern_4_draw.rectangle((1, 0, 14, 0), fill=(0, 0, 0, 0))
-    pattern_4_draw.rectangle((1, 15, 14, 15), fill=(0, 0, 0, 0))
-    pattern_4_draw.rectangle((0, 1, 0, 14), fill=(0, 0, 0, 0))
-    pattern_4_draw.rectangle((15, 1, 15, 14), fill=(0, 0, 0, 0))
-    ctm_4 = bg.alpha_composite(pattern_4)
-
-    # return image objects
-    return ctm_0, ctm_1, ctm_2, ctm_3, ctm_4
 
 
 def main():
