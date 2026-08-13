@@ -28,6 +28,20 @@ def ctm_meta_gen(name: str):
     """
 
     return properties_template, mcmeta_template
+
+
+def texture_gen(base: str, overlay: str):
+    """
+    Loads two images and pastes one ontop of the other, returning the result.
+    """
+    # load images from arg paths
+    bg = Image.open(base)
+    pattern = Image.open(overlay)
+
+    # paste second image ontop of first and return the result
+    bg.alpha_composite(pattern)
+    return bg
+
 def main():
     print("Hello from ore-gen!")
 
