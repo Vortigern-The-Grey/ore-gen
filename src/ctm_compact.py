@@ -66,15 +66,23 @@ def ctm_compact_wrapper():
     ore_dir = Path("./sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
+        if bg == "netherrack":
+            for pattern in patterns:
+                if "nether" in pattern.split("_"):
+                    images = ctm_compact_gen(
+                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                    )
+                    for i in range(len(images)):
+                        images[i].save(f"./output/compact/{pattern}.png")
         for pattern in patterns:
             images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-            if bg == "stone":
+            if bg == "stone" or bg == "netherrack":
                 Path(f"./output/compact/{pattern}/").mkdir(exist_ok=True)
-                for i in range(5):
+                for i in range(len(images)):
                     images[i].save(f"./output/compact/{pattern}/{i}.png")
             else:
                 Path(f"./output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
-                for i in range(5):
+                for i in range(len(images)):
                     images[i].save(f"./output/compact/{bg}_{pattern}/{i}.png")
 
 
@@ -84,6 +92,14 @@ def ctm_compact_wrapper_local():
     ore_dir = Path("../sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
+        if bg == "netherrack":
+            for pattern in patterns:
+                if "nether" in pattern.split("_"):
+                    images = ctm_compact_gen(
+                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                    )
+                    for i in range(len(images)):
+                        images[i].save(f"./output/compact/{pattern}.png")
         for pattern in patterns:
             images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
             if bg == "stone":

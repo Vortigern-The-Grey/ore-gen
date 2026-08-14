@@ -85,6 +85,14 @@ class CTMComplete:
         ore_dir = Path("./sprites/ores/")
         patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
         for bg in bgs:
+            if bg == "netherrack":
+                for pattern in patterns:
+                    if "nether" in pattern.split("_"):
+                        images = self.ctm_complete_gen(
+                            f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                        )
+                        for i in range(len(images)):
+                            images[i].save(f"./output/complete/{pattern}.png")
             for pattern in patterns:
                 images = self.ctm_complete_gen(
                     f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
@@ -104,6 +112,14 @@ class CTMComplete:
         ore_dir = Path("../sprites/ores/")
         patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
         for bg in bgs:
+            if bg == "netherrack":
+                for pattern in patterns:
+                    if "nether" in pattern.split("_"):
+                        images = self.ctm_complete_gen(
+                            f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                        )
+                        for i in range(len(images)):
+                            images[i].save(f"../output/complete/{pattern}.png")
             for pattern in patterns:
                 images = self.ctm_complete_gen(
                     f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"

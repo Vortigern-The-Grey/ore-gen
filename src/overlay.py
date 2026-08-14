@@ -31,6 +31,11 @@ def single_wrapper():
     ore_dir = Path("./sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
+        if bg == "netherrack":
+            for pattern in patterns:
+                if "nether" in pattern.split("_"):
+                    image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+                    image.save(f"./output/single/{pattern}.png")
         for pattern in patterns:
             image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
             Path("./output/single/").mkdir(exist_ok=True)
@@ -49,6 +54,11 @@ def single_wrapper_local():
     ore_dir = Path("../sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
     for bg in bgs:
+        if bg == "netherrack":
+            for pattern in patterns:
+                if "nether" in pattern.split("_"):
+                    image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+                    image.save(f"../output/single/{pattern}.png")
         for pattern in patterns:
             image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
             Path("../output/single/").mkdir(exist_ok=True)
