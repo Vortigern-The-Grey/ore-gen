@@ -9,8 +9,10 @@ def single_gen(base: str, overlay: str) -> Image.Image:
     print("\n[single_gen]: single_gen() initialised.")
 
     # load images from arg paths
-    bg = Image.open(base)
-    print("[single_gen]: Background image '{base}' loaded")
+    bg_raw = Image.open(base)
+    print("[single_gen]: Raw background image '{base}' loaded.")
+    bg = bg_raw.convert("RGBA")
+    print("[single_gen]: Background image '{base}' converted to RGBA.")
     pattern = Image.open(overlay)
     print("[single_gen]: Pattern image '{pattern}' loaded")
 
