@@ -32,10 +32,6 @@ def ctm_meta_gen(name: str, method: str) -> list[str]:
     return [properties_template, json.dumps(mcmeta_template, indent=4)]
 
 
-def ctm_complete_wrapper():
-    pass
-
-
 def main():
     in_menu = True
     while in_menu is True:
