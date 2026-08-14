@@ -36,7 +36,7 @@ def main():
     in_menu = True
     while in_menu is True:
         print(
-            "Select mode: \n1. Basic (full block outline, no ctm) \n2. Compact (ctm_compact 8way spec, 5 tiles per ore + metadata) \n3. Full (ctm 8-way spec, 47(6) tiles per ore + metadata) \n4. Exit"
+            "Select mode: \n1. Basic (full block outline, no ctm) \n2. Compact (ctm_compact 8way spec, 5 tiles per ore + metadata) \n3. Full (ctm 8-way spec, 47 tiles per ore + metadata) \n4. Exit"
         )
         mode = int(input(">>>"))
         if mode == 1:
@@ -44,7 +44,8 @@ def main():
         elif mode == 2:
             ctm_compact_wrapper()
         elif mode == 3:
-            ctm_complete_wrapper()
+            ctm_obj = CTMComplete(ctm_dict, zones)
+            ctm_obj.ctm_complete_wrapper()
         elif mode == 4:
             in_menu = False
         else:
