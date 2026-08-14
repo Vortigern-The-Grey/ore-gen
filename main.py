@@ -16,13 +16,13 @@ def ctm_meta_gen(name: str, method: str) -> list[str]:
     # mcmeta and properties template strings
     properties_template = f"""
     matchblocks={name}
-    method=ctm_compact
+    method={method}
     tiles=0-4
     """
     mcmeta_template = {
         "ctm": {
             "ctm_version": 1,
-            "type": "ctm",
+            "type": "{method}",
             "layer": "SOLID",
             "textures": [f"minecraft:block/{name}_ctm"],
             "extra": {"ignore_states": False, "connect_inside": True},
