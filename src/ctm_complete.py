@@ -8,6 +8,8 @@ class CTMComplete:
         """
         Import zone coordinates and ctm definitions and set them to self variables.
         """
+
+        # import and localise ctm_dict and zones
         self.ctm_dict = ctm_dict
         self.zones = zones
 
@@ -15,40 +17,109 @@ class CTMComplete:
         """
         Overwrite a 16x image zone with transparent pixels based on a selected zone (cardinal direction) and return it.
         """
+
+        # create ImageDraw object
         sprite_draw = ImageDraw.Draw(sprite)
-        sprite_draw.rectangle(zones[zone], fill=(0, 0, 0, 0))
+
+        # overwrite corresponding zone with transparent pixels based on key "zone"
+        sprite_draw.rectangle(self.zones[zone], fill=(0, 0, 0, 0))
         return sprite
 
-    def trim_ctm(self, num: int, sprite: Image.Image) -> Image.Image:
+    def trim_ctm(self, k, sprite: Image.Image) -> Image.Image:
         """
-        Overwrite multiple zones with transparent pixels based on ctm preset, looping through all zones in corresponding self.ctm_dict entry.
+        Overwrite multiple zones with transparent pixels based on ctm preset, looping through all zones in corresponding
+        print(self.zones)self.ctm_dict entry. For single overlay sprite generation, use while iterating through self.ctm_dict.
         Contains exceptions for full borders (id=0) and no borders (id=26)
         """
+
+        # create ImageDraw object
         sprite_draw = ImageDraw.Draw(sprite)
-        if type(self.ctm_dict[num]) is int:
+
+        if type(self.ctm_dict[k]) is int:
+            # do nothing if ctm_0 (full borders)
             return sprite
-        elif type(self.ctm_dict[num]) is tuple:
+
+        elif type(self.ctm_dict[k]) is tuple:
+            # do custom crop -> resize operation for ctm_26 (no borders)
+
+            # crop centre 14x14 square
             sprite_centre = sprite.crop((1, 1, 15, 15))
+
+            # restore 16x size by adding 1px layer of transparent pixels
             sprite_full = ImageOps.expand(sprite_centre, border=1, fill=(0, 0, 0, 0))
             return sprite_full
         else:
-            for zone in self.ctm_dict[num]:
+            # main iteration for all other ctm designations
+
+            # iterates through cardinal directions given in selected ctm_dict set
+            for zone in self.ctm_dict[k]:
+                # fills tuple from zones[] to overwrite transparent pixels
                 sprite_draw.rectangle(self.zones[zone], fill=(0, 0, 0, 0))
             return sprite
 
     def ctm_complete_gen(self, bg_path: str, overlay_path: str) -> list[Image.Image]:
-        bg = Image.open(bg_path)
+        # import background image
+        bg_raw = Image.open(bg_path)
+        # import overlay image
         overlay = Image.open(overlay_path)
+        # convert background to RGBA
+        bg = bg_raw.convert("RGBA")
         ctm_images = []
-        for i in ctm_dict:
+        # Iterates through all 47 ctm_dict entries
+        for k in self.ctm_dict.keys():
+            # creates clean copy of bg and overlay
             temp_bg = bg.copy()
             temp_overlay = overlay.copy()
-            temp_overlay = self.trim_ctm(i, temp_overlay)
+
+            # removes required zones from overlay using self.trim_ctm
+            temp_overlay = self.trim_ctm(k, temp_overlay)
+
+            # applies generated overlay to temp_bg and appends to ctm_images
             temp_bg.alpha_composite(temp_overlay)
             ctm_images.append(temp_bg)
         return ctm_images
 
+    def ctm_complete_wrapper(self):
+        bg_dir = Path("./sprites/stones/")
+        bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
+        ore_dir = Path("./sprites/ores/")
+        patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+        for bg in bgs:
+            for pattern in patterns:
+                images = self.ctm_complete_gen(
+                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                )
+                if bg == "stone":
+                    Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
+                    for i in range(len(images)):
+                        images[i].save(f"./output/complete/{pattern}/{i}.png")
+                else:
+                    Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                    for i in range(len(images)):
+                        images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
 
+    def ctm_complete_wrapper_local(self):
+        bg_dir = Path("../sprites/stones/")
+        bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
+        ore_dir = Path("../sprites/ores/")
+        patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+        for bg in bgs:
+            for pattern in patterns:
+                images = self.ctm_complete_gen(
+                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                )
+                print(f"Image number for {bg} {pattern}: {len(images)}")
+                if bg == "stone":
+                    Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
+                    for i in range(5):
+                        images[i].save(f"../output/complete/{pattern}/{i}.png")
+                else:
+                    Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                    for i in range(5):
+                        images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
+
+
+# zone dict
 zones = {
     "n": (1, 0, 14, 0),
     "ne": (15, 0, 15, 0),
@@ -61,7 +132,7 @@ zones = {
 }
 
 ctm_dict = {
-    0: None,
+    0: 0,
     1: {"e"},
     2: {"e", "w"},
     3: {"w"},
@@ -109,3 +180,8 @@ ctm_dict = {
     45: {"n", "ne", "e", "se", "s", "sw", "w"},
     46: {"n", "s", "e", "w"},
 }
+
+
+def main():
+    ctm_obj = CTMComplete(zones, ctm_dict)
+    ctm_obj.ctm_complete_wrapper_local()
