@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageOps
-# from pathlib import Path
+from pathlib import Path
 # import json
 
 
