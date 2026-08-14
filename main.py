@@ -4,6 +4,7 @@ import json
 # import custom clases/functions
 from src.overlay import single_wrapper
 from src.ctm_compact import ctm_compact_wrapper
+from src.ctm_complete import CTMComplete, zones, ctm_dict
 
 
 def ctm_meta_gen(name: str, method: str) -> list[str]:
