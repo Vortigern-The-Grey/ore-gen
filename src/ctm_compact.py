@@ -60,7 +60,25 @@ def ctm_compact_gen(base: str, overlay: str) -> list[Image.Image]:
     return [ctm_0, ctm_1, ctm_2, ctm_3, ctm_4]
 
 
-def main():
+def ctm_compact_wrapper():
+    bg_dir = Path("./sprites/stones/")
+    bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
+    ore_dir = Path("./sprites/ores/")
+    patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+    for bg in bgs:
+        for pattern in patterns:
+            images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            if bg == "stone":
+                Path(f"./output/compact/{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"./output/compact/{pattern}/{i}.png")
+            else:
+                Path(f"./output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"./output/compact/{bg}_{pattern}/{i}.png")
+
+
+def ctm_compact_wrapper_local():
     bg_dir = Path("../sprites/stones/")
     bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("../sprites/ores/")
@@ -69,13 +87,17 @@ def main():
         for pattern in patterns:
             images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
             if bg == "stone":
-                Path(f"../output/{pattern}/").mkdir(exist_ok=True)
+                Path(f"../output/compact/{pattern}/").mkdir(exist_ok=True)
                 for i in range(5):
-                    images[i].save(f"../output/{pattern}/{i}.png")
+                    images[i].save(f"../output/compact/{pattern}/{i}.png")
             else:
-                Path(f"../output/{bg}_{pattern}/").mkdir(exist_ok=True)
+                Path(f"../output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
                 for i in range(5):
-                    images[i].save(f"../output/{bg}_{pattern}/{i}.png")
+                    images[i].save(f"../output/compact/{bg}_{pattern}/{i}.png")
+
+
+def main():
+    ctm_compact_wrapper_local()
 
 
 if __name__ == "__main__":
