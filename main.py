@@ -28,17 +28,6 @@ def ctm_meta_gen(name: str) -> list[str]:
     return [properties_template, json.dumps(mcmeta_template, indent=4)]
 
 
-def texture_gen(base: str, overlay: str) -> Image.Image:
-    """
-    Loads two images and pastes one ontop of the other, returning the result.
-    """
-    # load images from arg paths
-    bg = Image.open(base)
-    pattern = Image.open(overlay)
-
-    # paste second image ontop of first and return the result
-    bg.alpha_composite(pattern)
-    return bg
 
 
 def main():
