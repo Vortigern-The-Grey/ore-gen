@@ -1,3 +1,6 @@
 output/compact/*/
+!output/compact/placeholder.txt
 output/complete/*/
+!output/complete/placeholder.txt
 output/single/*
+!output/single/placeholder.txt
