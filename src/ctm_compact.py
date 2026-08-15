@@ -65,28 +65,26 @@ def ctm_compact_wrapper():
     bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("./sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+    neth_dir = Path("./sprites/ores/nether")
+    neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
     for bg in bgs:
-        if bg == "netherrack":
-            for pattern in patterns:
-                if "nether" in pattern.split("_"):
-                    images = ctm_compact_gen(
-                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                    )
-                    for i in range(len(images)):
-                        images[i].save(f"./output/compact/{pattern}.png")
-        else:
-            for pattern in patterns:
-                images = ctm_compact_gen(
-                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                )
-                if bg == "stone" or bg == "netherrack":
-                    Path(f"./output/compact/{pattern}/").mkdir(exist_ok=True)
-                    for i in range(len(images)):
-                        images[i].save(f"./output/compact/{pattern}/{i}.png")
-                else:
-                    Path(f"./output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
-                    for i in range(len(images)):
-                        images[i].save(f"./output/compact/{bg}_{pattern}/{i}.png")
+        for pattern in patterns:
+            images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            if bg == "stone":
+                Path(f"./output/compact/{pattern}/").mkdir(exist_ok=True)
+                for i in range(len(images)):
+                    images[i].save(f"./output/compact/{pattern}/{i}.png")
+            elif bg != "netherrack":
+                Path(f"./output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
+                for i in range(len(images)):
+                    images[i].save(f"./output/compact/{bg}_{pattern}/{i}.png")
+    for neth_ore in neth_patterns:
+        images = ctm_compact_gen(
+            f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
+        )
+        Path(f"./output/compact/{neth_ore}/").mkdir(exist_ok=True)
+        for i in range(len(images)):
+            images[i].save(f"./output/compact/{neth_ore}/{i}.png")
 
 
 def ctm_compact_wrapper_local():
@@ -94,28 +92,26 @@ def ctm_compact_wrapper_local():
     bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("../sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+    neth_dir = Path("../sprites/ores/nether")
+    neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
     for bg in bgs:
-        if bg == "netherrack":
-            for pattern in patterns:
-                if "nether" in pattern.split("_"):
-                    images = ctm_compact_gen(
-                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                    )
-                    for i in range(len(images)):
-                        images[i].save(f"./output/compact/{pattern}.png")
-        else:
-            for pattern in patterns:
-                images = ctm_compact_gen(
-                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                )
-                if bg == "stone":
-                    Path(f"../output/compact/{pattern}/").mkdir(exist_ok=True)
-                    for i in range(5):
-                        images[i].save(f"../output/compact/{pattern}/{i}.png")
-                else:
-                    Path(f"../output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
-                    for i in range(5):
-                        images[i].save(f"../output/compact/{bg}_{pattern}/{i}.png")
+        for pattern in patterns:
+            images = ctm_compact_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            if bg == "stone":
+                Path(f"../output/compact/{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"../output/compact/{pattern}/{i}.png")
+            elif bg != "netherrack":
+                Path(f"../output/compact/{bg}_{pattern}/").mkdir(exist_ok=True)
+                for i in range(5):
+                    images[i].save(f"../output/compact/{bg}_{pattern}/{i}.png")
+    for neth_ore in neth_patterns:
+        images = ctm_compact_gen(
+            f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
+        )
+        Path(f"../output/compact/{neth_ore}/").mkdir(exist_ok=True)
+        for i in range(len(images)):
+            images[i].save(f"../output/compact/{neth_ore}/{i}.png")
 
 
 def main():

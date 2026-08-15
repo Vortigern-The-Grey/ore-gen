@@ -85,57 +85,57 @@ class CTMComplete:
         bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
         ore_dir = Path("./sprites/ores/")
         patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+        neth_dir = Path("./sprites/ores/nether")
+        neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
         for bg in bgs:
-            if bg == "netherrack":
-                for pattern in patterns:
-                    if "nether" in pattern.split("_"):
-                        images = self.ctm_complete_gen(
-                            f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                        )
-                        for i in range(len(images)):
-                            images[i].save(f"./output/complete/{pattern}.png")
-            else:
-                for pattern in patterns:
-                    images = self.ctm_complete_gen(
-                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                    )
-                    if bg == "stone":
-                        Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
-                        for i in range(len(images)):
-                            images[i].save(f"./output/complete/{pattern}/{i}.png")
-                    else:
-                        Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
-                        for i in range(len(images)):
-                            images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
+            for pattern in patterns:
+                images = self.ctm_complete_gen(
+                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                )
+                if bg == "stone":
+                    Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
+                    for i in range(len(images)):
+                        images[i].save(f"./output/complete/{pattern}/{i}.png")
+                else:
+                    Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                    for i in range(len(images)):
+                        images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
+        for neth_ore in neth_patterns:
+            images = self.ctm_complete_gen(
+                f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
+            )
+            Path(f"./output/compact/{neth_ore}/").mkdir(exist_ok=True)
+            for i in range(len(images)):
+                images[i].save(f"./output/complete/{neth_ore}/{i}.png")
 
     def ctm_complete_wrapper_local(self):
         bg_dir = Path("../sprites/stones/")
         bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
         ore_dir = Path("../sprites/ores/")
         patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+        neth_dir = Path("../sprites/ores/nether")
+        neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
         for bg in bgs:
-            if bg == "netherrack":
-                for pattern in patterns:
-                    if "nether" in pattern.split("_"):
-                        images = self.ctm_complete_gen(
-                            f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                        )
-                        for i in range(len(images)):
-                            images[i].save(f"../output/complete/{pattern}.png")
-            else:
-                for pattern in patterns:
-                    images = self.ctm_complete_gen(
-                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                    )
-                    print(f"Image number for {bg} {pattern}: {len(images)}")
-                    if bg == "stone":
-                        Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
-                        for i in range(5):
-                            images[i].save(f"../output/complete/{pattern}/{i}.png")
-                    else:
-                        Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
-                        for i in range(5):
-                            images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
+            for pattern in patterns:
+                images = self.ctm_complete_gen(
+                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                )
+                print(f"Image number for {bg} {pattern}: {len(images)}")
+                if bg == "stone":
+                    Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
+                    for i in range(5):
+                        images[i].save(f"../output/complete/{pattern}/{i}.png")
+                else:
+                    Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                    for i in range(5):
+                        images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
+        for neth_ore in neth_patterns:
+            images = self.ctm_complete_gen(
+                f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
+            )
+            Path(f"../output/compact/{neth_ore}/").mkdir(exist_ok=True)
+            for i in range(len(images)):
+                images[i].save(f"../output/complete/{neth_ore}/{i}.png")
 
 
 # zone dict

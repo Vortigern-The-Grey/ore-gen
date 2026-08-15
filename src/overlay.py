@@ -30,20 +30,20 @@ def single_wrapper():
     bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("./sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+    neth_dir = Path("./sprites/ores/nether")
+    neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
     for bg in bgs:
-        if bg == "netherrack":
-            for pattern in patterns:
-                if "nether" in pattern.split("_"):
-                    image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-                    image.save(f"./output/single/{pattern}.png")
-        else:
-            for pattern in patterns:
-                image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-                Path("./output/single/").mkdir(exist_ok=True)
-                if bg == "stone":
-                    image.save(f"./output/single/{pattern}.png")
-                else:
-                    image.save(f"./output/single/{bg}_{pattern}.png")
+        for pattern in patterns:
+            image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            Path("./output/single/").mkdir(exist_ok=True)
+            if bg == "stone":
+                image.save(f"./output/single/{pattern}.png")
+            else:
+                image.save(f"./output/single/{bg}_{pattern}.png")
+    for neth_ore in neth_patterns:
+        image = single_gen(f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png")
+        Path("./output/single/").mkdir(exist_ok=True)
+        image.save(f"./output/single/{neth_ore}.png")
 
 
 def single_wrapper_local():
@@ -54,20 +54,20 @@ def single_wrapper_local():
     bgs = [f.stem for f in bg_dir.iterdir() if f.is_file()]
     ore_dir = Path("../sprites/ores/")
     patterns = [f.stem for f in ore_dir.iterdir() if f.is_file()]
+    neth_dir = Path("../sprites/ores/nether")
+    neth_patterns = [f.stem for f in neth_dir.iterdir() if f.is_file()]
     for bg in bgs:
-        if bg == "netherrack":
-            for pattern in patterns:
-                if "nether" in pattern.split("_"):
-                    image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-                    image.save(f"../output/single/{pattern}.png")
-        else:
-            for pattern in patterns:
-                image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-                Path("../output/single/").mkdir(exist_ok=True)
-                if bg == "stone":
-                    image.save(f"../output/single/{pattern}.png")
-                else:
-                    image.save(f"../output/single/{bg}_{pattern}.png")
+        for pattern in patterns:
+            image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+            Path("../output/single/").mkdir(exist_ok=True)
+            if bg == "stone":
+                image.save(f"../output/single/{pattern}.png")
+            else:
+                image.save(f"../output/single/{bg}_{pattern}.png")
+    for neth_ore in neth_patterns:
+        image = single_gen(f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png")
+        Path("../output/single/").mkdir(exist_ok=True)
+        image.save(f"../output/single/{neth_ore}.png")
 
 
 def main():
