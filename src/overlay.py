@@ -36,13 +36,14 @@ def single_wrapper():
                 if "nether" in pattern.split("_"):
                     image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
                     image.save(f"./output/single/{pattern}.png")
-        for pattern in patterns:
-            image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-            Path("./output/single/").mkdir(exist_ok=True)
-            if bg == "stone":
-                image.save(f"./output/single/{pattern}.png")
-            else:
-                image.save(f"./output/single/{bg}_{pattern}.png")
+        else:
+            for pattern in patterns:
+                image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+                Path("./output/single/").mkdir(exist_ok=True)
+                if bg == "stone":
+                    image.save(f"./output/single/{pattern}.png")
+                else:
+                    image.save(f"./output/single/{bg}_{pattern}.png")
 
 
 def single_wrapper_local():
@@ -59,13 +60,14 @@ def single_wrapper_local():
                 if "nether" in pattern.split("_"):
                     image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
                     image.save(f"../output/single/{pattern}.png")
-        for pattern in patterns:
-            image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
-            Path("../output/single/").mkdir(exist_ok=True)
-            if bg == "stone":
-                image.save(f"../output/single/{pattern}.png")
-            else:
-                image.save(f"../output/single/{bg}_{pattern}.png")
+        else:
+            for pattern in patterns:
+                image = single_gen(f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png")
+                Path("../output/single/").mkdir(exist_ok=True)
+                if bg == "stone":
+                    image.save(f"../output/single/{pattern}.png")
+                else:
+                    image.save(f"../output/single/{bg}_{pattern}.png")
 
 
 def main():

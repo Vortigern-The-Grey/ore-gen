@@ -1,5 +1,6 @@
 from PIL import Image, ImageDraw, ImageOps
 from pathlib import Path
+
 # import json
 
 
@@ -93,18 +94,19 @@ class CTMComplete:
                         )
                         for i in range(len(images)):
                             images[i].save(f"./output/complete/{pattern}.png")
-            for pattern in patterns:
-                images = self.ctm_complete_gen(
-                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                )
-                if bg == "stone":
-                    Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
-                    for i in range(len(images)):
-                        images[i].save(f"./output/complete/{pattern}/{i}.png")
-                else:
-                    Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
-                    for i in range(len(images)):
-                        images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
+            else:
+                for pattern in patterns:
+                    images = self.ctm_complete_gen(
+                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                    )
+                    if bg == "stone":
+                        Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
+                        for i in range(len(images)):
+                            images[i].save(f"./output/complete/{pattern}/{i}.png")
+                    else:
+                        Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                        for i in range(len(images)):
+                            images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
 
     def ctm_complete_wrapper_local(self):
         bg_dir = Path("../sprites/stones/")
@@ -120,19 +122,20 @@ class CTMComplete:
                         )
                         for i in range(len(images)):
                             images[i].save(f"../output/complete/{pattern}.png")
-            for pattern in patterns:
-                images = self.ctm_complete_gen(
-                    f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
-                )
-                print(f"Image number for {bg} {pattern}: {len(images)}")
-                if bg == "stone":
-                    Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
-                    for i in range(5):
-                        images[i].save(f"../output/complete/{pattern}/{i}.png")
-                else:
-                    Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
-                    for i in range(5):
-                        images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
+            else:
+                for pattern in patterns:
+                    images = self.ctm_complete_gen(
+                        f"{bg_dir}/{bg}.png", f"{ore_dir}/{pattern}.png"
+                    )
+                    print(f"Image number for {bg} {pattern}: {len(images)}")
+                    if bg == "stone":
+                        Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
+                        for i in range(5):
+                            images[i].save(f"../output/complete/{pattern}/{i}.png")
+                    else:
+                        Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
+                        for i in range(5):
+                            images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
 
 
 # zone dict
