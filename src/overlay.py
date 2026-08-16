@@ -38,7 +38,7 @@ def single_wrapper():
             Path("./output/single/").mkdir(exist_ok=True)
             if bg == "stone":
                 image.save(f"./output/single/{pattern}.png")
-            else:
+            elif bg != "netherrack":
                 image.save(f"./output/single/{bg}_{pattern}.png")
     for neth_ore in neth_patterns:
         image = single_gen(f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png")
