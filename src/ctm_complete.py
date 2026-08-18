@@ -96,7 +96,7 @@ class CTMComplete:
                     Path(f"./output/complete/{pattern}/").mkdir(exist_ok=True)
                     for i in range(len(images)):
                         images[i].save(f"./output/complete/{pattern}/{i}.png")
-                else:
+                elif bg != "netherrack":
                     Path(f"./output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
                     for i in range(len(images)):
                         images[i].save(f"./output/complete/{bg}_{pattern}/{i}.png")
@@ -104,7 +104,7 @@ class CTMComplete:
             images = self.ctm_complete_gen(
                 f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
             )
-            Path(f"./output/compact/{neth_ore}/").mkdir(exist_ok=True)
+            Path(f"./output/complete/{neth_ore}/").mkdir(exist_ok=True)
             for i in range(len(images)):
                 images[i].save(f"./output/complete/{neth_ore}/{i}.png")
 
@@ -125,7 +125,7 @@ class CTMComplete:
                     Path(f"../output/complete/{pattern}/").mkdir(exist_ok=True)
                     for i in range(5):
                         images[i].save(f"../output/complete/{pattern}/{i}.png")
-                else:
+                elif bg != "netherrack":
                     Path(f"../output/complete/{bg}_{pattern}/").mkdir(exist_ok=True)
                     for i in range(5):
                         images[i].save(f"../output/complete/{bg}_{pattern}/{i}.png")
@@ -133,7 +133,7 @@ class CTMComplete:
             images = self.ctm_complete_gen(
                 f"{bg_dir}/netherrack.png", f"{neth_dir}/{neth_ore}.png"
             )
-            Path(f"../output/compact/{neth_ore}/").mkdir(exist_ok=True)
+            Path(f"../output/complete/{neth_ore}/").mkdir(exist_ok=True)
             for i in range(len(images)):
                 images[i].save(f"../output/complete/{neth_ore}/{i}.png")
 
